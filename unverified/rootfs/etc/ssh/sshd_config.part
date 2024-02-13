@@ -1,0 +1,25 @@
+
+HostKey /etc/ssh/ssh_host_ed25519_key
+
+
+PermitRootLogin prohibit-password
+
+PasswordAuthentication no
+
+Subsystem sftp internal-sftp
+
+# Example of overriding settings on a per-user basis
+#Match User anoncvs
+#	X11Forwarding no
+#	AllowTcpForwarding no
+#	PermitTTY no
+#	ForceCommand cvs server
+
+AllowUsers sftpUser
+
+Match Group sshLimitedToSftp
+ChrootDirectory /path/to/dir/all/dirs/here/not/writable/by/nonroot
+ForceCommand internal-sftp
+X11Forwarding no
+AllowTcpForwarding no
+

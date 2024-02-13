@@ -1,0 +1,29 @@
+#!/bin/sh
+exec tail -n +3 $0
+# This file provides an easy way to add custom menu entries.  Simply type the
+# menu entries you want to add after this comment.  Be careful not to change
+# the 'exec tail' line above.
+
+#set superusers="root"
+#password_pbkdf2 root  grub.pbkdf2.sha512.10000.ABCDEF...
+
+menuentry "LiveDVD Start Linux Mint 20.3 Xfce 64-bit" --class linuxmint {
+        set gfxpayload=keep
+        set iso_path="/.../linuxmint-20.3-xfce-64bit.iso"
+        search --no-floppy --fs-uuid --set=root 01234567-0123-0123-0123-0123456789ab
+        loopback loop (${root})${iso_path}
+        linux   (loop)/casper/vmlinuz  file=/cdrom/preseed/linuxmint.seed boot=casper iso-scan/filename=${iso_path} quiet splash --
+        initrd  (loop)/casper/initrd.lz
+}
+
+menuentry "LiveDVD MX Linux 21 x64" {
+	set iso_path="/.../MX-21_x64.iso"
+	set UUID="01234567-0123-0123-0123-0123456789ab"
+	search --no-floppy --fs-uuid --set=root $UUID
+	loopback loop0 (${root})$iso_path
+	#probe -u $root --set=buuid
+	#linux (loop0)/antiX/vmlinuz quiet splasht nosplash buuid=$UUID fromiso=$iso_path lang=ru_RU kbd=us tz=Europe/Moscow
+	linux (loop0)/antiX/vmlinuz  nosplash buuid=$UUID fromiso=$iso_path lang=ru_RU kbd=us tz=Europe/Moscow
+	initrd (loop0)/antiX/initrd.gz
+}
+

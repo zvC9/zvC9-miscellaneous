@@ -1,0 +1,84 @@
+
+1. installation
+1.1. partition table: GPT
+1.2. zeroed partition 8MiB with bios_grub flag
+1.3. luks1 /boot (1GiB), luks2 / (24GiB). Both ext4
+1.4. 100MiB ESP (EFI) with FAT32 fs
+1.5. free 1GiB + 24GiB (can be used in next installation )
+1.6. 2560MiB swap partition (create zeroed partition 2560MiB, install linux,
+1.7. 2 swapfiles (2+2GiB) on luks2 partition(s) 
+ configure swapfile, then format 2560MiB as swap (can be used by liveUSB or liveCD))
+1.8. free space divided into few partitions (3 or more), each one is luks2.
+  1.8.2. these are mounted under /mnt/0000/data/01, 02, 03, 04, ...
+  1.8.1. /mnt/0000 DAC mode (basic permissions) is 0000:
+   # mkdir --mode 0000 /mnt/0000
+1.9. folders from data_01, 02, ... partitions are mounted into /home tree or
+ other places with bind-mount:
+  # echo /mnt/0000/data/01/tnm/debian11/root/home/users/user1 /home/users/user1 \
+   none bind,nodev,nosuid 0 0 >> /etc/fstab
+1.10. protected files for users are bind-mounted (with ro option) under
+ /home/system/root/pub
+ 1.10.1. (!!) don't bind-mount under some directory which
+ is bind-mounted. Otherwise you will also get same (newly-mounted) 
+ folder mounted to another place, with different options
+ (can lose "ro" option, for example)
+1.11. install packages:
+ 1.11.1. office:
+  1.11.1.1. libreoffice writer, calc, draw, impress
+  1.11.1.2. calligra: sheets, stage, words
+  1.11.1.3. gnumeric, abiword
+ 1.11.2. image processing:
+  gimp krita
+ 1.11.3. vector graphics:
+  inkscape karbon
+ 1.11.4. sound editors: audacity
+ 1.11.5. video editors:
+  kdenlive flowblade openshot shotcut
+ 1.11.6. screen recording (video):
+  simplescreenrecorder, recordmydesktop, kazam, peek, obs-studio, vokoscreen, vlc
+ 1.11.7. video players:
+  vlc, smplayer
+ 1.11.8. video recompressors and simple editors:
+  handbrake, avidemux, transmageddon, ffmpeg
+  1.11.8.1. other for video/audio:
+   mkvtoolnix(-gui), lame, twolame, flac
+ 1.11.9. for compiling:
+  build-essential, g++ gcc, gcc-doc, valgrind, gdb
+ 1.11.10. basic tools:
+  htop vlock pwgen screen mc xorrisofs brasero k3b
+ 1.11.11. torrent:
+  qbittorrent, transmission (gtk, cli), mktorrent, buildtorrent, rtorrent
+ 1.11.12. openvpn, openssl, gnutls
+ 1.11.13. brave-browser, vivaldi, falkon (browsers)
+ 1.11.14. for disks: parted, gparted, gnome-disk-utility, fdisk, gdisk, cfdisk, cgdisk, sfdisk, sgdisk, testdisk
+ 1.11.15. gnome-system-tools
+ 1.11.16. tools for work with S.M.A.R.T.
+ 1.11.17. libvirt-daemon, vier-manager, vier-viewer, qemu and all related (see pkgs list)
+ 1.11.18. text editors: mousepad, pluma, gedit, geany
+ 1.11.19. lightdm and configurators for it
+ 1.11.20. compiz, fusion-icon, ccsm, simple-ccsm
+ 1.11.21. grub-pc, grub-efi-amd64-bin
+ 1.11.22. pmount
+1.12. configure system:
+ in /etc/pam.d/su force wheel for su
+ in /etc/sudoers and /etc/sudoers.d comment out NOPASSWD things and what else
+ /bin/su, /bin/sudo, /bin/pkexec: make them runnable only by members of wheel group (mode 4110, --s--x---)
+  (they are suid)
+ also, check other suid files. find:
+  # find / -type f -perm /4000 -ls | less -i
+ securely install sshd:
+  # dpkg-divert --add --local --rename /etc/ssh/sshd_config ; apt install openssh-server
+  # ...
+ # dpkg-reconfigure console-data
+ # dpkg-reconfigure console-setup
+ # dpkg-reconfigure keyboard-configuration
+ # dpkg-reconfigure tzdata
+ # dpkg-reconfigure locales
+ configure lightdm (black bg, no user bg, no avatar; show user list)
+ create regular user (not member of wheel or sudo or ... groups),
+  member of users,kvm,video,audio,cdrom,optical,floppy,plugdev,scanner
+  configure bind-mount of his places under home folder
+  install firefox into ~/opt, from official site, create .desktop for it,
+  configure xfce4, create "sync" button, 2nd videocard attach .desktop 
+   (use this command: "xrandr --setprovideroutputsource 1 0") button,
+  

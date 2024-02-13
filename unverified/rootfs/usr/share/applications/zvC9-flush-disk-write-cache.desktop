@@ -1,0 +1,10 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Flush disk write cashe
+Comment=for case of powerfail or kernel panic or...
+Exec=bash -c "echo -n sync... ; sync ; echo -n sync 2... ; sync ; echo OK ; sleep 5"
+Icon=media-floppy
+Path=/
+Terminal=true
+StartupNotify=false

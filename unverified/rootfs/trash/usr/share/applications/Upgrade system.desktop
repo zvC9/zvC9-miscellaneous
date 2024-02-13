@@ -1,0 +1,11 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Upgrade system
+Name[ru]=Обновить систему
+Comment=
+Exec=screen -S system-upgrade sudo /root/bin/zvC9-upgrade.bash
+Icon=system-software-update
+Path=/
+Terminal=true
+StartupNotify=false

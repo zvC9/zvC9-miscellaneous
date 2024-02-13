@@ -1,0 +1,4 @@
+QT_QPA_PLATFORMTHEME=qt5ct
+LIBGL_DRIVERS_PATH=/opt/custom/lib/x86_64-linux-gnu/dri
+LD_LIBRARY_PATH=/opt/custom/lib/x86_64-linux-gnu
+

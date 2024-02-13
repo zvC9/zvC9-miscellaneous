@@ -1,0 +1,12 @@
+[Unit]
+Description=Run custom onboot script
+After=cpufrequtils.service
+
+
+[Service]
+Type=simple
+ExecStart=/root/bin/onboot.bash
+
+[Install]
+WantedBy=graphical.target
+

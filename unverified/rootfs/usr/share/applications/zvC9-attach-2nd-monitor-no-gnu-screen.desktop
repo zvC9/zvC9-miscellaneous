@@ -1,0 +1,12 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=zvC9 Attach monitors on 2nd video card
+Name[ru]=zvC9 Подключить мониторы от вторичной видеокарты
+Comment=use this if you have 2 video cards and don't see displays attached to secondary video card
+Comment[ru]=используйте, если подключено 2 видеокарты и не видны мониторы, подключенные ко вторичной видеокарте
+Exec=bash -c "echo When config window appears, disable mirror mode. And if needed, turn on all displays/monitors ; echo Когда появится окно настройки, отключите зеркальный режим. И если надо, включите все мониторы ; xrandr  --setprovideroutputsource  1  0 ; sleep 5 ; xfce4-display-settings "
+Icon=video-display
+Path=/
+Terminal=true
+StartupNotify=false

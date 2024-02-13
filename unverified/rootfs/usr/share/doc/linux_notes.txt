@@ -1,0 +1,2121 @@
+#!/bin/cat
+
+# DO NOT  RUN THIS FILE AS SCRIPT
+exit 0 # quit bash
+
+
+
+## Drafty notes (a draft) version 0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.1
+
+pwd
+ # print working directory
+echo $(pwd)
+exit 0
+
+cat /proc/cpuinfo | more
+
+# switch to tty7
+chvt 7
+
+# "converts filenames from one encoding to another"
+convmv
+
+
+
+groupadd --system wheel
+gpasswd --add myname wheel
+chgrp -c wheel /bin/su /usr/bin/pkexec /usr/libexec/polkit-agent-helper-1
+chmod -c 4110 /bin/su /usr/bin/pkexec /usr/libexec/polkit-agent-helper-1
+gpasswd wheel # set group password
+gpasswd -r wheel # will be impossible to use group password
+gpasswd --delete myname wheel
+
+
+dmidecode
+apt
+apt-get
+apt-cache
+apt-mark
+apt-file
+scrcpy
+fastboot
+adb
+
+groupadd --gid 2000 myname2
+mkdir --mode 0700 /home/myname2
+rsync -aH /etc/skel/ /home/myname2/
+useradd --comment "My Name 2" --home-dir /home/myname2 --gid 2000 --groups scanner,vboxusers --no-create-home --no-user-group --shell /bin/bash --uid 2000 myname2
+chown -c -R myname2: /home/myname2
+groupadd --system --gid 910 mysysgroup
+useradd --comment "My System User" --home-dir /noexistent --gid 910  --no-create-home --no-user-group --shell /usr/sbin/nologin --uid 910 --system mysysuser
+  # --system for system users/groups
+usermod
+groupmod
+groupmems
+adduser
+addgroup
+
+$ newgrp wheel
+
+man terminfo
+man xml2
+man bitmap
+man ext4
+
+# terminal file management
+ ls
+ ls -la
+ ls -lai
+ ls -las
+ ls -lapt
+ ls -lapts
+ ls -ld ~
+ ls -ld ~myname
+ ls -H 1.txt
+ ls -l 1.txt
+ cat 1.txt
+ cat 1.txt | hexdump -C
+ cat 1.txt | hd
+ cat 1.txt 2.txt
+ cat 1.txt 2.txt | tee -a append.txt
+
+ shred -z 1.txt
+
+ mkdir ~/dir1
+ mkdir --mode 0700 ~/dir2
+ mkdir --mode 0700 --parents ~/1/2/3/4/5/6/7/8
+ rmdir --parents ~/1/2/3/4/5/6/7/8
+ rm -rf ~/trash
+
+ mkdir --mode 0700 ~/trash
+ mv -iv ~/backup ~/trash/backup
+
+ ln -li /usr/bin /bin
+
+ cp -lnv /var/cache/apt/archives/*.deb ~/backup/deb/
+
+ rsync -aH /home/myname ~root/backup/
+ rsync -rlH /home/myname ~root/backup/
+ rsync -aH myhost:/home/myname ~/backup/ # over ssh
+
+diff -qura dir1 dir2
+diff -quraN dir1 dir2
+diff -u 1.txt 2.txt
+diff -s 1.txt 2.txt
+diff -q 1.txt 2.txt
+diff -s 1.bin 2.bin
+cmp 1.bin 2.bin # yes?
+
+
+
+grub-mkconfig --output /mnt/sda1/boot/grub/grub.cfg
+## add custom menu entries, delete old ones
+gedit /mnt/sda1/boot/grub/grub.cfg
+grub-install --boot-directory /mnt/sda1/boot /dev/sda
+grub-install --target x86_64-efi --efi-directory /mnt/sda1/boot/efi
+
+kill
+killall
+pkill
+pgrep
+pidwait
+
+env
+declate
+set
+printenv
+
+## Enable and disable shell builtins
+enable
+
+less
+more
+
+cat
+dd
+# pv ?
+
+tee
+pee
+
+nc
+netcat
+netwrite
+netread
+
+VBoxManage internalcommands createrawvmdk -filename /path/to/sda.vmdk -rawdisk /dev/sda
+# for windows: VBoxManage internalcommands createrawvmdk -filename C:\sda.vmdk -rawdisk \\.\PhysicalDrive0
+# also, can with VBoxManage: list VMs, add nested-hw-virt support to VM, clone .vdi virtual HDD (TODO: put commands here)
+
+# manage wi-fi/bluetooth
+rfkill
+
+factor 24
+# 24: 2 2 2 3
+#(which means 2**3*3 or 2^3*3)
+
+systemctl reboot --firmware-setup
+systemctl poweroff --firmware-setup
+systemctl halt # turn off OS and disks?
+reboot
+logout
+exit
+exit 0
+exit 1
+poweroff
+
+
+systemctl get-default
+systemctl set-default multi-user.target
+systemctl set-default graphical.target
+
+systemctl disable  ssh
+systemctl enable   ssh
+systemctl stop     ssh
+systemctl start    ssh
+systemctl restart  ssh
+
+# for /etc/openvpn/myvpn.conf
+systemctl enable openvpn@myvpn
+
+systemctl disable lightdm
+# also, gdm, xdm, sddm, lxdm, ... slim?
+
+# replace running bash with other program (like execve or other functions in c++)
+exec [-cl] [-a name] [command [arguments]]
+
+# show video cards info and other (screen resolution, drivers used, ...)
+inxi -G
+
+# view file
+ less -i ~/1.txt
+ cat ~/1.txt | less -i
+ less -i < ~/1.txt
+ cat < ~/1.txt | less -i
+ # may be, can replace "less" with "more" 
+ # also, can try mcview, vim, vi
+
+locate
+whereis man
+whatis man
+whoami
+
+
+exit
+# Ctrl+D
+
+# Ctrl+O = execute
+
+clear
+# Ctrl+L
+
+# print machine hardware name (same as uname -m)
+arch
+
+## what GrUB passed to kernel
+cat /proc/cmdline
+
+losetup --find /home/myname/1.img
+losetup --find /home/myname/1.img --sector-size 512
+losetup --find /home/myname/1.img --sector-size 512 --partscan
+losetup --find /home/myname/1.img --sector-size 512 --partscan --read-only
+losetup --list
+losetup --detach /dev/loop0
+losetup --detach-all
+
+gparted
+gparted /dev/sda
+fdisk -l
+lsblk
+lsblk -b
+# SSD has ROTA=0, HDD has ROTA=1
+lsblk -o +fstype,rota,uuid
+lsblk -o +fstype,rota,uuid,label,min-io,log-sec,phy-sec
+# -sec are sector sizes (logical, physical)
+blkid
+df -h
+df -B 1
+df -B M
+mount
+mount | column -t
+
+# search files ending with .bash
+find /home/myname -iname "*.bash"
+find /home/myname | grep -E -i ".*\\.bash\$"
+ # when bash sees "\\", it passes "\". When Regexp has "\." (in this case), this means dot character ("." = ASCII 0x2e = ASCII 46 = ASCII 056 (octal))
+ # (single . means any character and .* means any character repeated any non-negative integer number of times (0, 1, 2, 3, ...)
+ # (seems like can relpace "*" with "{0,}" in regexps, which sets lower amount limit = 0, and upper limit = no limit),
+ # "?" in RegExp = 0 or 1 times, same as "{0,1}" )
+# recursively find myregexp in files in home folder ( ${HOME}, AKA $HOME )
+grep -r -i "myregexp" ~
+
+
+grub-mkpasswd-pbkdf2
+#grub.pbkdf2.sha512.10000.CA92991C0D77A62E689097BF84421A66F9C7A62626C57179A100E09A7FCC2BAB325C02647618C42C4982CD6B44E8A19B5DCA17146381B91C39118ED303A70542.7B3FAF3BB2598A4931ECD37FB7939EB70783149BEB83E0FF7D5BF6AF5D84F5888BDD273B33C243034213BB1D41DD890416F8D188887807C7208E964B0CAB7443
+info grub # search for security/passwords/...
+# press / and type search string and press Enter. Highlight link (with arrow keys) and press Enter
+# may be, RegExps are supported to be search strings
+
+# when browsing text with "man" or "less", can press /, type RegExp (can use simple text) and press Enter to search. n = find next. N = find back.
+# Use arrow keys, Home, End, PgDn, PgUp to navigate.
+# Press q to quit "man" or "less"
+# seems like q quits "more" when using more and can use space for navigation forward when using "more"
+
+# watch X events
+xev
+
+## select among variants providing same executables
+update-alternatives --all
+
+
+
+alias
+alias "ls=ls --color=auto"
+alias
+unalias ls
+
+cp -r /home/myname /backup/
+
+cmd arg1 ... 2>&1| less -i # pipe stderr (2) and stdout (1) of "cmd arg1 ..." to "less -i"
+# also, can try 2| 2> | 1>&2
+
+cat > 1.txt << EOF
+$BASHPID ( replaced by number )
+EOF
+
+cat > 1.txt << "EOF"
+$BASHPID (exactly "$BASHPID" with dollar, B, A, S, H, ...)
+EOF
+
+# add key to ssh agent, not to have to use password every time
+ssh-add ~/.ssh/id_ed25519
+
+# in some cases, just "wipefs /dev/sdc" will show what is it going to wipe, but will not wipe
+wipefs /dev/sdc
+# this will wipe all
+wipefs --all /dev/sdc
+
+apropos regex | less -i
+man 7 regex
+man -k pcresyntax
+man 3 pcresyntax
+man ascii # wrong?
+man -k ascii
+man -k ascii | grep -E ^ascii
+man 7 ascii
+man 7 charsets
+man 7 utf-8
+man 7 utf8
+man 7 unicode
+
+# this program shows unicode characters, their descriptions and codes
+gucharmap
+iconv -o 1.for_windows.txt -f UTF-8 -t CP1251 1.txt  # or WINDOWS-1251. cp866 is for DOS, KOI8-R can also be used under Linux or where else?
+iconv --list # list known charsets
+
+
+
+# this locks VT (tty) and doesn't let to switch to other VT (tty)
+vlock --all
+vlock -a
+ # (tty = virtual console, use Ctrl+Alt+F3 to switch to tty3 (similar for tty1-tty6. And tty7 is usually Xorg, like tty8/tty9/... (when have few Xorg displays). In ALT Linux, you can have tty1=Xorg. Also, can have similar numbering with gdm or other display managers))
+## also, can try this:
+#vlock --all --new # untested
+
+# generate passwords (20 characters per password, 3 passwords)
+pwgen -c -n -s -B -y 20 3
+
+
+touch -t TIME 1.txt
+touch 1.txt
+
+
+cp -a ...
+rsync -aH ...
+rsync -rlH ...
+gzip -4
+gzip -d
+gunzip
+bzip2 -4
+bzip2 -d
+bunzip2
+xz -0
+xz -d
+zstd -4
+zstd -d
+
+#rar ?
+#unrar ?
+
+chattr +i 1.txt
+chattr +s 1.txt # for something like shred on removal
+
+# Ctrl+z
+jobs
+fg 1
+bg 1
+
+### what is this?
+##fuser -km /mnt/sda1
+### and this?
+##umount -n /mnt/sda2
+
+ls -lSr
+sort -rn
+last -x shutdown
+dmidecode
+hdparm
+truncate --reference=/dev/sda ~/sda.img
+chmod --reference ~/1.txt ~/2.txt
+
+
+# when installine Linux Mint 21 being booted from .iso file with GrUB
+umount -r -l -f /isodevice
+ # (with LMDE5 you do not have to umount. Also, add this to grub menuentry (you find grub menuentry template in /boot/grub/grub.cfg inside LMDE5 or Linux Mint 21 installation/LiveDVD/LiveUSB .iso):
+ # set iso_path="/lmde-5-cinnamon-64bit.iso"
+ # set uuid=12345678-1234-1234-1234-123456789abc
+ # search --no-floppy --set root --fs-uuid $uuid
+ # loopback myloop (${root})$iso_path
+ # set root=myloop
+ # set opt="fromiso=/dev/disk/by-uuid/${uuid}$iso_path"
+ # # it will be smth like "fromiso=/dev/disk/by-uuid/12345678-1234-1234-1234-123456789abc/lmde5.iso"
+ # # and add this to "linux" GrUB menuentry line (after kernel file path): " $opt " (don't put quotation marks into line, surround "$opt" by spaces)
+ # )
+ # BTW, with LMDE5 you can use only "https:" apt sources, not "http:" (when using yandex mirror)
+ # I have not found way to do same with Linux Mint 21 (ubuntu security servers don't receive "https:" connections,
+ # but debian ones do (work with HTTPS))
+ ### can use grub submenu:
+ ##  submenu "LiveISO" {
+ ##   menuentry "LMDE5 LiveDVD" {
+ ##    ...
+ ##   }
+ ##   menuentry "LMDE5 LiveDVD compatibility mode" {
+ ##    ...
+ ##   }
+ ## }
+
+update-alternatives --all
+cat 1.txt >> 2.txt # append
+
+
+# terminate current bash process with optional exit code (0 = success)
+exit 0
+exit 1
+exit
+
+
+# note group 1 (grouping set of notes here)
+ function fname () {
+  echo $1 $2
+  return 0
+ }
+
+ fname qwe asd
+
+ cat > 1.bash <<EOF
+#!/bin/bash
+
+echo $1 $2
+return 0 # if "source" this file
+EOF
+
+ # still inside note group 1
+ source ./1.bash qwe asd
+ # leaving note group 1
+
+
+
+man sed
+info sed
+sed -E -e "s/http:\\/\\(.*)//https:\\/\\/\\1/g"
+ # \\1 becomes \1 means what matched what was inside 1st ()
+ #\\/ becomes \/ means /
+ # . means any character
+ # \\. would become \. would mean dot character
+
+
+pwd
+echo $(pwd)
+echo $PWD
+ 
+
+curl ...
+# HTTP method: not GET, not POST, but HEAD :
+curl --head ...
+wget ...
+ # wget can download site recursively
+
+
+touch ~/1.txt
+type man
+type help
+type if
+type case
+type for
+type while
+type enable
+type until
+type break
+type continue
+type select
+type echo
+which echo # note, bahs uses builtin echo, while external program echo is abailable. Same for "test", "time" (time is keyword, not builtin)
+ # which doesn't show bash builtins
+which man
+which which
+which env
+
+
+env
+env | grep -F DISPLAY
+grep -A 5 -F TEXTTEXTTEXT -r . # A = afrer   (print matching line and 4 or 5 lines after  it)
+grep -B 5 -F TEXTTEXTTEXT -r . # B = before  (print matching line and 4 or 5 lines before it)
+grep -C 5 -F TEXTTEXTTEXT -r . # C = context (print matching line and 4 or 5 lines before it and 4 or 5 lines after it)
+grep -E REGEXP -r . # extended regexp
+grep -P REGEXP -r . # PCRE (perl-compatible regexps)
+grep -i ... # ignore case
+egrep ... # grep -E
+fgrep ... # grep -F
+rgrep ... # grep -R
+grep -q ... # do not output (use exit code. 0 (success) if match found (right?))
+
+
+
+
+
+
+
+
+man cp | less -i
+# apropos ... = man -k ...
+# it searches man pages related to ...
+man -k apropos
+apropos apropos
+man info
+man -k regex
+man 7 regex
+# same:
+man regex\(7\)
+
+
+# launch bash as myname
+sudo -u myname bash
+# launch login shell as myname (different from previous. with -i you cd into ~ and may be, have some ENVIRONMENT differencies and may be, other differencies)
+sudo -u myname -i
+
+# same as root
+sudo -i
+sudo bash
+
+su - myname
+su -
+su myname
+su
+
+
+
+lsattr
+lsattr -a
+chattr +i myfile.txt
+setfacl ...
+getfacl ...
+
+LC_ALL=C.UTF-8 DISPLAY=:1.0 XAUTHORITY=/home/myname/.Xauthority gedit ~/1.txt
+echo $? # exit code of last command. 0 = success, not 0 = failure
+cd ~
+cd /home/myname
+cd -
+pushd /home/myname
+popd
+pushd ~myname
+ls
+popd
+## Ctrl+R, "rsync", Ctrl+R, Ctrl+R  ## search in history for commands
+## 
+
+### &&, ||, &, |, ";", >, <, $(), ``, <<EOF, <<"EOF", 2>&1| , what else?
+[-d ...] || exit 0
+sync -f .
+sync
+
+cp -nlv /var/cache/apt/archives/*.deb /backup/deb/
+
+dd if=... of=... bs=... ibs=... obs=... conv=noerror,notrunc,fsync iflag=fullblock oflag=sync
+  ## conv=sync (not fsync) means add some data where read errors or what?
+  ## conv=sparse for sparse "writes" (don't use when burning to usb flash or block device
+ddrescue --sparse /dev/sda1 /backup/sda1.img ~/sda1.map
+
+
+mount -a
+swapon -a
+swapoff -a
+swapon --show
+mount
+mount | column -t
+
+
+man man | col -b
+
+tty
+realpath ./1.txt
+readlink -e ./1.txt
+trust
+gtf 1280 1024 60
+cvt 1280 1024 60
+Xorg -configure
+xrandr -q
+xrandr --newmode "1280x1024_75.00"  138.54  1280 1368 1504 1728  1024 1025 1028 1069  -HSync +Vsync
+xrandr --addmode VGA-1 "1280x1024_75.00"
+xrandr --output VGA-1 --mode "1280x1024_75.00"
+xrandr --output VGA-1 --gamma 2:2:2 # R:G:B, seems like gamma correction is applied when outputting (gamma transform: f(x)=x^gamma, x in range[0,1]; reverse transform (gamma correction): f_inverse(x) = x^(1/gamma) (this means x to the power of (1/gamma); in this example gamma = 2 for all channels (red, green, blue)))
+#xrandr --output default --mode "1280x1024_75.00"
+## connect displays available through secondary video card:
+xrandr --setprovideroutputsource 1 0
+
+
+
+# try virt-manager for managing VMs launched with qemu (but it sometimes changes ownership of files (without asking about it or informing about it))
+# RAM 1024 MiB (-m), 2 CPU cores (-smp)
+# no network: -net none
+# OVMF = UEFI bios
+# local time: -rtc base=localtime
+# accel can be tcg or kvm
+ACCEL=tcg
+qemu-system-x86_64 -monitor stdio -m 1024 \
+  -drive file=Snapshots/current_state.qcow2,if=ide,media=disk,format=qcow2,cache=writethrough,readonly=off \
+  -boot order=c,menu=on -name myVM -smp 2 -nodefaults \
+  -chardev vc,id=vc0 -mon chardev=vc0 \
+  -usb -device usb-tablet \
+  -device usb-ehci,id=ehci0 \
+  -device usb-ehci,id=ehci1 \
+  -device usb-ehci,id=ehci2 \
+  -device usb-ehci,id=ehci3 \
+  -display gtk,window-close=off \
+  -cpu host \
+  -vga virtio \
+  -machine accel=$ACCEL \
+  -netdev user,id=usernet0,ipv6=off -device e1000,netdev=usernet0 \
+  -drive file=cdrom.iso,if=ide,media=cdrom,readonly=on,format=raw \
+  -bios /usr/share/qemu/OVMF.fd \
+  -rtc base=utc \
+  -device virtio-balloon-pci
+# other options:
+# -drive file=cdrom.iso,if=none,media=cdrom,readonly=on,format=raw,id=mycd0 -drive file=Snapshots/current_state.qcow2,if=none,media=disk,format=qcow2,id=currhdd
+# -drive file=zvC9-swap.qcow2,if=none,media=disk,format=qcow2,id=swap0
+# -device ide-cd,drive=mycd0,bootindex=1,unit=1  -device ide-hd,drive=currhdd,bootindex=2,unit=0  -device virtio-blk-pci,drive=swap0,bootindex=3  -netdev user,id=usernet0,ipv6=off -device e1000,netdev=usernet0,bootindex=4
+
+# use ballon from mon (VC0):
+# (prompt) balloon 512
+# this sets available memory for VM to 512 MiB and deallocates extra memory (more free momory on host)
+qemu-system-x86_64 -device help
+qemu-system-x86_64 -vga help
+## VGA list from "qemu-system-x86_64 -vga help":
+#none                 no graphic card
+#std                  standard VGA (default)
+#cirrus               Cirrus VGA
+#vmware               VMWare SVGA
+#xenfb                Xen paravirtualized framebuffer
+#qxl                  QXL VGA
+#virtio               Virtio VGA
+  
+
+DOWNLOAD_KEYSERVER="hkp://keyserver.ubuntu.com" lxc-create -t download -n test
+lxc-ls
+lxc-start test
+lxc-info test
+lxc-execute test /bin./bash
+lxc-monitor
+lxc-wait […]
+lxc-stop test
+lxc-console -n test
+(Ctrl-a q, to disconnect)
+
+GNU screen usage:
+ ## launch session (interactive):
+  # either
+  screen -S id1
+  # or
+  screen
+ ## launch session and run command inside it:
+  # either
+   screen less /proc/cpuinfo
+  # or
+   screen -S less_cpuinfo less /proc/cpuinfo
+ ## detach from attached screen:
+  # Ctrl+a d
+ ## detach from attached nested screen (level 2):
+  # Ctrl-a a d
+ ## detach from attached nested screen (level 3):
+  # Ctrl-a a a d
+ ## detach from attached nested screen (level n):
+  # Ctrl-a a ...  a d
+  ## Ctrl+a: 1 times
+  ## a: (n-1) times
+  ## d: 1 times
+ ## enter cmdline screen mode:
+  # Ctrl-a :
+ ## cmdline screen mode commands:
+  copy
+   ## in copy mode you can scroll back and see terminal history. If have nested screen, send copy command to most nested screen (Ctrl-a a a a ... a : "copy" Enter)
+ ## attach to detached screen session:
+  screen -r less_cpuinfo
+ ## attach to attached screen session:
+  screen -x -r less_cpuinfo
+ ## list screen sessions:
+  screen -ls
+ ## start screen session in detached mode (can use in systemd onboot .service):
+  screen -d -m -S sync_loop bash -c "for ((;;)) ; do sleep 100 ; sync ; done"
+ ## send command to screen session:
+  screen -S sync_loop -X quit # check this. see man screen for list of commands (quit, copy, detach, colon, ...)
+watch lsusb
+watch -d sensors
+sensors
+cpufreq-info
+
+
+a2ensite mysite
+a2dissite mysite
+a2enmod rewrite
+fallocate -l 3GiB 3GiB.raw
+truncate --size 3GiB 3GiB_sparse.raw
+dd if=/dev/zero bs=1M iflag=fullblock of=3GiB.raw count=3072
+dd if=/dev/zero bs=1M iflag=fullblock of=3GiB_sparse.raw count=3072 conv=sparse
+
+
+# TODO: explain these
+ uuencode ...
+ uudecode ...
+
+## ecryptfs usage (this mode fails in Linux Mint 20.3. But this works: "mount -t ecryptfs ./dir1 ./dir2", but this way you can not change password without reencrypting data)
+ ##Create wrapped passphrase:
+ mkdir ~/.ecryptfs
+         ( stty -echo; printf "Passphrase: " 1>&2; read PASSWORD; stty echo; echo 1>&2; head -c 48 /dev/random | base64; echo "$PASSWORD"; ) \
+         | ecryptfs-wrap-passphrase ~/.ecryptfs/wrapped-passphrase >/dev/null
+ ##Insert wrapped passphrase:
+ ( stty -echo; printf "Passphrase: " 1>&2; read PASSWORD; stty echo; echo "$PASSWORD"; ) | ecryptfs-insert-wrapped-passphrase-into-keyring ~/.ecryptfs/wrapped-passphrase -
+ ##mount with unwrapped key:
+ KEY_SIG="0123456789abcdef"
+ mount -i -t ecryptfs /path/.private /path/private -o ecryptfs_sig=${KEY_SIG},ecryptfs_fnek_sig=${KEY_SIG},ecryptfs_cipher=aes,ecryptfs_key_bytes=32,ecryptfs_unlink_sigs
+ 
+
+
+##list keys in keyring:
+keyctl list @u
+## what is this? :
+keyctl list @us
+
+
+
+free -m
+free -b
+lsblk -b
+blkid
+df -h
+df -B M
+df -B 1
+mount
+mount | column -t
+
+man ls | col -b > ls.txt # yes?
+
+cal
+ncal
+
+## create .pdf file from set of lexicographically numbered .png files:
+ls *.png | sort | xargs img2pdf -o out.pdf --imgsize 300dpi 
+
+
+gpg --full-generate-key
+gpg --list-secret-keys --keyid-format long
+git config --global user.signingKey ABCDEF0123456789
+git config --show-origin user.signingKey
+git config --show-scope  user.signingKey
+git config --local --unset user.signingKey
+git config --global user.name "Me"
+git config --global user.email "me@mail.com"
+git init
+## add files
+
+git add .
+ # this recursively adds files to next commit
+## next (-S means sign with gpg):
+git commit -m "initial commit"
+## next (-s means sign with gpg):
+git tag 0.1
+git push
+git push --tags
+## other repo:
+git clone git@github.com:/me/proj1
+git pull
+# change repo...
+
+git add .
+ # this recursively adds files to next commit
+gpg sign README.md
+ ## now gpg-agent allows to use key for some time. Without it signing with git fails
+rm -fv README.md.gpg
+git commit -S -m "message here"
+ # -S = sign
+git tar -s 4.66.23.5
+ # -s = sign
+git push
+git push --tags
+# more:
+ git diff
+ git diff --cached
+ git archive --output myproj1_4.66.23.5_src.tar 4.66.23.5
+ git status
+ git status --short
+ git log
+ git tag
+ git checkout 4.66.23.5
+  # change directory tree state to it's state at tag "4.66.23.5"
+
+uptime
+ # print how long is system working for (since last boot)
+uptime --since
+ # since when is it working
+uptime  --pretty
+ # other output style
+
+## ssh
+ ## generate key pair:
+  ssh-keygen -t ed25519
+ ## see public key fingerprint:
+  ssh-keygen -l -f ./id_ed25519.pub
+
+
+## generate hashsums (SHA256):
+find -type f -exec sha256sum -b "{}" \; > sha256sums
+sha256sum -b sha256sums.txt  > sha256sums.sha256sum
+## check hash sums (SHA256):
+sha256sum -c sha256sums.sha256sum
+sha256sum -c sha256sums
+## or
+LC_ALL=C.UTF-8 sha256sum -c sha256sums.sha256sum
+LC_ALL=C.UTF-8 sha256sum -c sha256sums
+
+
+## generate list of bash commands:
+compgen -c
+## watch it:
+compgen -c | less -i
+ # or
+compgen -c > compgen_-c.txt
+less -i compgen_-c.txt
+
+
+##search which package contains file:
+apt contains bin/bash
+apt-file search bin/bash
+
+## see package's installed files
+dpkg-query -L bash
+## see packages:
+dpkg-query -l bash\*
+dpkg-query -l "bash*"
+
+## install/remove packages:
+aptitute
+synaptic
+apt install bash
+apt install --no-install-recommends bash
+apt install --install-suggests      bash
+apt reinstall bash
+apt reinstall --no-install-recommends bash
+apt reinstall --install-suggests      bash
+
+## search package
+apt-cache search tunnel
+apt-cache show openvpn
+
+## remove .deb files cache
+apt clean
+apt-get clean
+
+## prepare for upgrade
+apt-get --download-only dist-upgrade
+
+## upgrade:
+apt-get  dist-upgrade
+ # or
+apt-get --no-install-recommends dist-upgrade
+## or on mint:
+mintupdate-cli upgrade
+
+# remove package:
+apt remove openvpn
+# remove package and it's config files:
+apt purge openvpn
+#(synaptic can purge, too)
+
+# download .deb files for installed packages:
+apt-get --download-only reinstall $(apt-mark showinstall)
+## same:
+apt-get --download-only reinstall `apt-mark showinstall`
+## then save .deb files this way:
+mkdir ~root/apt-cache-deb
+cp -nvl /var/cache/apt/archives/*.deb ~root/apt-cache-deb/
+## (-l here, it works if source and destination are on same filesystem)
+
+# show packages (installed/installed_and_marked_manual/installed_and_marked_auto):
+ apt-mark showinstall
+ apt-mark showmanual
+ apt-mark showauto
+
+## create .desktop file:
+exo-desktop-item-edit --create-new --type Application file://
+ # it will ask where to save
+## edit .desktop file:
+exo-desktop-item-edit ./myfile.desktop
+
+type help
+type ls
+type type
+help help
+help type
+man man
+man ls
+info grub
+which grub-install
+
+who
+w
+users
+
+whoami
+logname
+
+whois 192.168.0.1
+
+dig ya.ru
+nslookup ya.ru
+host ya.ru
+
+ping       ya.ru
+mtr        ya.ru
+tracepath  ya.ru
+traceroute ya.ru
+nmap       ya.ru
+nmap -Pn -p1-65535 ya.ru
+ # -Pn = skip ping test, assume host is online
+ # PORT SPECIFICATION AND SCAN ORDER:
+ #            -p <port ranges>: Only scan specified ports
+ #              Ex: -p22; -p1-65535; -p U:53,111,137,T:21-25,80,139,8080,S:9
+ #            --exclude-ports <port ranges>: Exclude the specified ports from scanning
+
+# monitor disk usage
+iotop
+# monitor power consumption
+powertop
+# something about DNS requests
+dnstop
+
+# scan images with these programs
+scanimage
+xscanimage
+xsane
+scanimage --all-options
+
+
+## image/graphics editors:
+ # raster (pixel-based):
+  gimp
+  krita
+ # vector:
+  inkscape
+  karbon
+ #+ others (libreoffice draw, what else?)
+
+libreoffice --write
+libreoffice --calc
+libreoffice --draw
+abiword
+calligrawords
+calligrasheets
+gnumeric
+calligra
+
+# small set of image viewers:
+ pix
+ geeqie
+ gwenview
+ ## (search for more with apt-cache or synaptic (or yandex or google or duckduckgo or ...) )
+ ## gqview was available time ago, geeqie is replacement
+## process raster (pixel) images:
+ convert
+  # (from imagemagick package)
+
+# print user name, UID, GUI, primary group name, additional group names and IDs
+id
+# print user name
+whoami
+# print user name
+logname
+# print primary group followed by supplementary groups
+groups
+# start new shell with this as primary group (have to enter group password)
+newgrp users
+
+# manage basic permissions for filesystem objects:
+chgrp -c -R sudo /home/myname
+chown -c -R root: /root
+chown -c -R root:root /root
+chown -c -R root:sudo /root
+chmod -c -R a-st /home/backup
+# pair of changes (1st one is "needed" to disable execute permission bit on files):
+ chmod -c -R 0000 /home/backup
+ chmod -c -R ug=rX,o= /home/backup
+  # note X, not x. Means set x if x is set for ... or this is directory
+  # (so, you have to disable x on files before running this)
+
+
+# how to setup filesystem usage with quota
+apt install quota
+echo "UUID=01234567-0123-0123-0123-0123456789ab  /  ext4  errors=remount-ro,rw,usrquota,grpquota,jqfmt=vfsv1  0  1" >> /etc/fstab
+ # and remove old line for / from /etc/fstab
+# when / is mounted with quota support:
+quotacheck -u -g -m /
+
+# with this system will ask for LUKS passwords during boot (can use encrypted / including /boot (luks1 only, GrUB doesn't support LUKS2))
+echo "somename UUID=01234567-0123-0123-0123-0123456789ab  none luks" >> /etc/crypttab
+echo "/dev/mapper/somename  /  ext4  errors=remount-ro,rw,usrquota,grpquota,jqfmt=vfsv1  0  1" >> /etc/fstab
+
+
+## compute stats for quota on FS mounted with usrquota,grpquota
+quotacheck -u -g -m /mnt/nvme0n1p1
+## setup limits for user (see man page)
+setquota --user myname 20G 21G 300000 400000 /mnt/myfs
+## display quota statistics and limits for user
+quota -v -s --user myname
+
+
+## TODO: explain this:
+ # conntrack -L
+
+
+stat /home/myname
+netstat -tupln
+inxi ... | pastebin  # use this to share your system info in mint support IRC (accessible via hexchat program) and hope to get help
+# get info about video cards, displays, drivers, ...
+inxi -G
+# video card-related info
+glxinfo
+# about video card:
+lspci -v | grep -C 12 -i vga
+# simple mini-benchmark of OpenGL
+glxgears
+
+lspci
+lsattr
+lsblk
+lscpu
+ls
+lshw
+lsmod
+lsof
+lsusb
+hwinfo
+cpuid
+udevadm info /dev/sdb
+
+
+# display info about .deb file:
+dpkg-deb -f 1.deb
+# unpack .deb file into directory (then you can change something including pre-install/post-install scripts and pack back into new .deb (see next command))
+dpkg-deb -R ...
+# pack directory back into .deb file
+dpkg-deb -b ...
+
+
+# programs to capture video from screen:
+ # with this you can choose from lot of encodings, capture or not mouse pointer, which area to capture, capture or not sound from speakers
+  simplescreenrecorder
+ # this may be can capture into .gif file
+  peek
+ # this one works from commandline, but in some cases I can't disable it't removal of left and right edges of screen (it doesn't capture whole picture):
+  recordmydesktop
+   ### (you can launch it as root on lightdm (or other display manager) screen and capture lightdm video (run
+   ### this way:
+   ##   XAUTHORITY=/var/lib/lightdm/.Xauthority DISPLAY=:0.0 recordmydesktop ...
+   ### ))
+ # kazam can capture screen and sound from speakers or microphone or speakers+microphone
+ kazam
+ obs
+  # obs (from obs-studio package) has limitations
+  # sometimes it only works this way:
+   LIBGL_ALWAYS_SOFTWARE=1 obs # check VAR name and value (may be, =y or =yes or =on )
+ vokoscreenNG
+ # may be, vlc can capture screen
+ # also, vlc can convert video
+
+# tools to reencode video+sound
+handbrake
+ # handbrake is available in lmde5
+transmageddon
+ # transmageddon was available somewhere some time ago
+
+# video editors (kdenlive is tested to be suitable in some cases):
+kdenlive
+flowblade
+openshot
+shotcut
+
+## cut usage
+cat /etc/passwd | cut -d ":" -f 1
+## uniq usage (sort is needed for uniq of stream of lines is not sorted)
+cat 1.txt | sort | uniq
+
+# ascending
+ du -sm * | sort -n
+# descending
+ du -sm * | sort -rn
+
+# print last lines of file and keep printing when someone writes something to the file
+tail -f /var/log/mylog
+
+# head is like tail, but prints beginning of file, not ending
+head
+tail
+# uniq removes adjacent equal lines
+uniq
+# cut divides lines into fields and cuts fields (TODO: explain this)
+cut
+
+
+# umask shows which bits (basic filesystem objects permissions) are disabled
+# on creation
+umask
+umask 7077
+# print process's stack size limit (8 MiB?)
+ulimit -s
+
+
+uname
+# this shows kernel version:
+uname -r
+# this shows "all"
+uname -a
+
+# update initramfs for running kernel (do this in chroot environment during install of lmde5 after creating /target/etc/crypttab and configuring other things)
+# (or do this after running "plymouth-set-default-theme"):
+update-initramfs -u -k $(uname -r)
+
+# this generates /boot/grub/grub.cfg
+update-grub
+# install grub for BIOS (or legacy or CSM) mode (grub-pc is for bios):
+grub-install --target i386-pc /dev/sda
+# install grub for UEFI mode:
+grub-install --target x86_64-efi
+
+# show current plymouth theme (boot/poweroff screen and luks password request during boot)
+# (press Esc during boot to turn off this mode. And press Esc again to enable it)
+plymouth-set-default-theme
+# list available plymouth themes
+plymouth-set-default-theme --list
+# set theme to moonlight
+plymouth-set-default-theme moonlight
+# then need to update initrd ( initrd = initramfs )
+update-initramfs -u -k all
+### (if you get powerfail during this or kernel panic or... may be, it will be impossible to boot.
+### To avoid this you can use this:
+##   update-initramfs -u -k $(uname -r)
+### and keep initrd for older kernels untouched)
+
+# disable basic permission bits for "other" on /home/myname
+# (what if one of "other" has file sescriptors opened for /home/myname or something below it?
+# process will still have access?)
+chmod -c o= /home/myname
+chmod -c o= ~
+chmod -c o= ~myname1
+chmod -c o= ~myname2
+
+
+## LUKS and cryptsetup
+## iter time 30 sec
+## if you set iter time = 10 sec (10000 ms) and use grub with luks1, grub will possibly 
+## spend 80 seconds opening disk, so 30 sec would become 4 minutes (240 s). If you want it fast,
+## use long unguessable passwords and "--iter-time 1000" (1 second and may be, 8 seconds for GrUB)
+cryptsetup luksFormat --type luks1 --iter-time 30000 /dev/sda12 
+ # NOTE! "--type luks1" is for GrUB, which does not support luks2
+cryptsetup open       --type luks1                   /dev/sda12  sda12_luks1
+cryptsetup luksDump /dev/sda12
+cryptsetup luksAddKey --iter-time 30000 /dev/sda12
+cryptsetup luksRemoveKey /dev/sda12
+## cryptsetup luksChangeKey ... ?
+cryptsetup luksUUID /dev/sda12
+cryptsetup luksUUID --uuid 01234567-0123-0123-0123-0123456789ab /dev/sda12
+cryptsetup isLuks --type luks1 /dev/sda12
+
+mkdir --mode 0000 /mnt/0000
+mkdir /mnt/0000/sda12_luks1
+mount -t ext4 /dev/mapper/sda12_luks1 /mnt/0000/sda12_luks
+chown -c -R root:myname /mnt/0000/sda12_luks/backup/myfiles
+chmod -c -R ug=rX,o= /mnt/0000/sda12_luks/backup/myfiles
+mount -o bind,ro  /mnt/0000/sda12_luks/backup/myfiles  /home/myname/myfiles
+
+# set filesystem label
+e2label /dev/mapper/sda12_luks1 backupFS
+## display info (ext2/3/4):
+tune2fs -l /dev/sda3
+## disable journal:
+tune2fs -O ^has_journal /dev/sda3
+## enable journal:
+tune2fs -O has_journal /dev/sda3
+## set UUID:
+tune2fs -U 01234567-0123-0123-0123-0123456789ab /dev/sda3
+### TODO: explain these:
+#tune2fs -Q usrquota /dev/sda3
+#tune2fs -Q grpquota /dev/sda3
+#tune2fs -Q prjquota /dev/sda3
+
+
+# check filesystem. -f = even if looks clean. -y = always assume answer "yes"
+fsck.ext4 -f -y /dev/sda3
+
+# output infinite sequence of "y" lines (can be input for programs asking for "y/n"):
+yes
+# output infinite sequence of "y" lines (can be input for programs asking for "y/n"):
+yes y
+# output infinite sequence of "n" lines (can be input for programs asking for "y/n"):
+yes n
+# output infinite sequence of "yes" lines (can be input for programs asking for "y/n"):
+yes yes
+
+
+
+mkdir --mode 0000 /0000
+fallocate -l 3GiB /0000/swapfile
+chmod -c 0600 /0000/swapfile
+mkswap /0000/swapfile
+mv -iv /0000/swapfile /
+echo "/swapfile  none swap sw 0 0" >> /etc/fstab
+## either
+swapon -a
+## or
+swapon /swapfile
+
+free -m
+free -b
+lsblk -b
+top
+htop
+iotop
+powertop
+dnstop
+nethogs
+users
+who
+w
+ps -ejf | grep ssh
+
+
+find /usr -perm /4000 # any of this bit are set
+find /usr -perm /4000 -ls
+find /usr -perm -4000 # all of this bit are set, which is equal to any (bit is 1 here)
+find /usr -perm /6000 # any of these bits are set (SUID or  SGID)
+find /usr -perm -6000 # all of these bits are set (SUID and SGID)
+find / -name "*.txt"
+find / -iname "*.txt" ## ignore case
+find / -path "*/bin/*.sh"
+find / -ipath "..." ## ignore case
+find /backup -type f -exec chmod -c a-x "{}" \;
+find /backup -type d -exec chmod -c u+x "{}" \;
+find /backup -type b -delete
+find /backup -type c -delete
+find /backup -type p -delete
+find /backup -type s -delete
+find /backup -type l -ls
+
+
+## convert duplicates into hardlinks to files (doesn't work spanning more than 1 filesystem)
+jdupes -r --linkhard /backup
+
+test -e /bin/bash
+test "$i" = "1"
+# same:
+[ "$i" = "1" ]
+man test
+help test
+/usr/bin/test "$i" = "1"
+# same?
+$(which test) "$i" = "1"
+ #(bash uses builtin "test", but this way external test program is invoked)
+
+read A; echo "You told: $A"
+read ; echo "You told: $REPLY"
+
+# enable/disable bash builtins
+enable
+# execute bash script in current bash interpreter
+# ("exit" command causes this shell to exit. use "return" for "source" and in bash functions)
+source
+.
+ # "." is same as "source"
+:
+ # ":" does same as "true"
+true
+ # returns 0 (success)
+false
+ # returns not 0 (failure)
+
+# bash programming
+while ...
+for i in ... ; do ... ; done
+for ((i=0;i<100;++i)) ; do ...  ; done
+case i in a | b*) ... ;; *) ... ;; esac # yes?
+if ... ; then  ... ; else ... ; fi
+select i in ... ... ...  # TODO: explain
+
+# show history
+history
+# clean history
+history -c
+# set time format for history
+echo "export HISTTIMEFORMAT=\"%Y-%m-%d_%H-%M-%S \"" >> ~/.bashrc # note space after seconds (%S) # yes?
+
+# PATH contains colon-separated (":"-separated) list of directories where executables are searched on command execution
+# (executables with basename = command (without arguments))
+export PATH="${PATH}:/myprogs/bin"
+
+# either
+ LC_ALL=C.UTF-8
+ export LC_ALL
+# or
+ export LC_ALL=C.UTF-8
+
+## editors:
+nano
+pico
+vim
+vi
+mcedit
+mousepad
+gedit
+pluma
+geany
+xed
+
+# these start Xorg
+ startx
+ startxfce4
+ # this is SUID
+  /usr/lib/xorg/Xorg.wrap
+# this starts Xorg in virtual screen (you can use x11vnc (vnc server) and vnc client (remmina?) to access the screen):
+Xvfb :3 -screen 0 1280x1024x24
+# this way you launch xfce4 session under Xorg
+DISPLAY=:3.0 XAUTHORITY=~/.Xauthority xfce4-session
+# TODO: collect arguments
+x11vnc ...
+## TODO: explain
+#xinit
+
+# vnc/rdp/nx/... client
+remmina
+
+# terminal emulators
+xfce4-terminal
+xterm
+
+# TODO: comment+explain these
+mcopy
+time command arguments
+echo "20 / 3" | bc
+echo "25 / 4" | calc
+calc "27/4"
+## exclusive access to /dev/sdc
+flock /dev/sdc sfdisk /dev/sdc
+
+
+# partition table management:
+fdisk
+gdisk
+cfdisk
+cgdisk
+sfdisk
+sgdisk
+parted
+gparted
+
+gnome-disks
+ # this one can work with S.M.A.R.T. (SMART) and may be, with partitions (TODO: check)
+
+# install drivers or firmware or what? (TODO: check)
+isenkram
+isenkram-cli
+
+runlevel
+
+# for SSD:
+ # discard unused blocks:
+ fstrim
+ # discard all blocks (erase everything on SSD):
+ blkdiscard
+
+time-admin
+# set motherboard clock to be local time, not UTC (GMT)
+timedatectl set-local-rtc 1
+
+# save system clock to motherboard:
+hwclock -w
+# read motherboard clock into system clock:
+hwclock -s
+
+dpkg-reconfigure tzdata
+# here can set Alt+Shift to toggle keyboard layout (but cinnamon will use Super+Space (Win+Space) and tty will use Shift+Space)
+dpkg-reconfigure keyboard-configuration
+# set fonts and charset for vt (tty)
+dpkg-reconfigure console-setup
+
+# only ROTA and NAME columns and no children:
+lsblk -d -o +name,rota /dev/sda
+# same as ROTA
+cat /sys/block/sda/queue/rotational
+
+# check if is running on VM (virtual machine in VirtualBox or Qemu or ...)
+imvirt
+
+# about processor:
+lscpu
+cat /proc/cpuinfo
+cpuid
+
+#check hardware virtualization support in CPU:
+grep -E "vmx|svm" /proc/cpuinfo
+# for Intel: check if vmx is enabled:
+rdmsr 0x3a
+# (lowest bit = 1 means MSR is locked. 3rd lowest bit = 1 means vmx is enabled. For VMX to work it must be enabled and MSR 0x3a must be locked
+# 0x5  = 0b101 means enabled and locked
+# 0x4  = 0b100 means enabled and unlocked (need to lock and can use VMX)
+# 0x0  = 0b000 means disabled and unlocked. If processor supports VMX, can enable and lock (use "wrmsr")
+# 0x1  = 0b001 means disabled and locked (can't use VMX until next reboot or poweroff)
+# 0x13 = 0b1101 means enabled and locked (and some irrelevant bit set to 1), it's like 0x5, means can use VMX
+# 0x12 = 0b1100 means enabled and unlocked. lock 1st with wrmsr, then use VMX
+# 0x9  = 0b1001 means disabled and locked (can't use VMX until next reboot or poweroff)
+# )
+
+
+# archive usage/creation
+tar -c ~/backup -f ~/backup.tar
+tar -c ~/backup -z -f ~/backup.tar.gz
+tar -c ~/backup -j -f ~/backup.tar.bz2
+tar -c ~/backup -J -f ~/backup.tar.xz
+tar -x -z -f ~/backup.tar.gz
+##...
+tar -x -J -f ~/backup.tar.xz
+
+## unpack into /newdir :
+mkdir --mode 0700 /newdir
+tar -C /newdir -x -J -f ~/backup.tar.xz
+
+tar --list ~/backup.tar
+
+7z a -mx=0 ~/backup.7z ~/backup
+7z a -mx=0 -tzip ~/backup.zip ~/backup # not a mistake here?
+zip -0 -r ~/backup.zip ~/backup
+mkdir --mode 0700 /newdir
+cd /newdir
+## either
+unzip ~/backup.zip
+## or
+7z x ~/backup.zip
+## or
+7z x ~/backup.7z
+
+## create multifile archive
+7z a -mx=0 -v512m ~/backup.7z ~/backup
+##unpack
+cd /newdir
+7z x ~/backup.7z.001
+
+
+# configure CPU frequency limits or set fixed frequency
+ nproc # show number of CPU cores
+ for ((i=0;i<$(nproc);++i)) ; do
+  ## either
+   cpufreq-set --cpu $i --freq 1000MHz
+  ## or
+   cpufreq-set --cpu $i --governor ondemand
+   cpufreq-set --cpu $i --min 400MHz
+   cpufreq-set --cpu $i --max 5000MHz
+ done
+
+
+for i in * ; do echo FOUND FILE $i ; done
+
+truncate --size 200GiB ~/no_space_used.img ## zero contents
+fallocate -l 10GiB ~/10_GiB_space_used.img ## zero contents
+fallocate -d ~/10_GiB_space_used.img ; mv -iv ~/10_GiB_space_used.img ~/0_GiB_space_used.img ## no space used after "fallocate -d ..."
+## (sparse file)
+
+
+if mountpoint /mnt/sda1 ; then
+ umount /mnt/sda1
+fi
+
+# same:
+ calc "2^20"
+ calc "2**20"
+
+netcat
+nc
+nc -l -s 127.0.0.1 -p 1410
+## one-way netcat:
+ netwrite
+ netread
+
+echo -en "\\x24\\x3f=$?"
+echo -en "\\x24\\U3f=$?"
+echo -en "\\x24\\u3f=$?"
+echo -en "\\x24\\u003f=$?"
+echo -en "\\x24\\U0000003f=$?"
+echo -en "\\u24\\U0000003f=$?"
+# ...
+
+### GrUB cmdline and menuentry commands
+ cmostest
+ cmosset
+ cmosclean
+ cmosdump
+ linux
+ initrd
+ chainloader +1
+ set root=...
+ lopback
+ search
+ boot
+ echo
+ ls
+ cryptomount
+ #sleep?
+ 
+
+### files
+ /dev/null # everyone can write to here and it will be ignored
+ /dev/zero # can read sequence of zeroes from this file
+ /dev/random
+ /dev/urandom
+ /etc/issue # see this expanded when open tty (Ctrl-Alt-F1, ..., Ctrl-Alt-F6)
+ /etc/os-release
+ /etc/fstab
+ /etc/crypttab
+ /etc/network/interfaces
+ /etc/network/interfaces.d/
+ /etc/default/grub
+ /etc/default/grub.d/
+ /etc/grub.d
+ /etc/sysctl.conf
+  # to enable IPv4 routing, put "net.ipv4.ip_forward=1" into this file (or uncomment it if present)
+ /etc/sysctl.d/
+ /etc/passwd
+ /etc/shadow
+ /etc/group
+ /etc/gshadow
+ ~/.ssh/authorized_keys
+  # here you put public keys ( append them to this file) with which's secret counterparts you/one can login as you
+ ~/.ssh/config
+  ### here you put this:
+  ##    Host github
+  ##    IdentityFile ~/.ssh/id_ed25519_github
+  ##    Hostname github.com
+  ##    User myname
+  ### Then you clone with something like this:
+  ##   $ git clone git@github:...
+   
+ /etc/sudoers
+ /etc/sudoers.d/
+ /etc/sudoers.d/mintupdate
+  # comment out lines here and users will be unable to "apt update" or what
+  # (useful if you predownload packages for possible installation and do not want to make then invisible
+  # for apt (in case of "apt update" you can get newer versions of these packages into lists and apt will not see older versions
+  # and will not install them))
+ /etc/apt/preferences.d/
+ /etc/apt/preferences.d/zvC9.pref
+  ### here you can disable dangerous packages to avoid installing by accident:
+  ## $ cat /etc/apt/preferences.d/zvC9.pref
+  ## Package: zutils zutils:i386 mariadb-server mariadb-server:i386 apache2-bin apache2-bin:i386 apache2 apache2:i386 durep durep:i386 openssh-server* openssh-server*:i386 postfix* postfix*:i386 gnome-photos gnome-photos:i386 ui-auto ui-auto:i386 exim4* exim4*:i386 bsd-mailx bsd-mailx:i386 tracker-extract tracker-extract:i386 postgresql-13 postgresql-13:i386
+  ## Pin: release a=*
+  ## Pin-Priority: -10
+   
+  ## NOTE: openssh-server should be installed when booted into recovery mode and all network interfaces are down.
+  ## after installation, stop ssh server ("systemctl stop ssh"), disable it autostart ("systemctl disable ssh")
+  ## and configure ("nano /etc/ssh/sshd_config") to make it secure. If you have weak passwords for users and are connected to Internet
+  ## directly, you can get ssh logins from Internet and someone will be able to work on your PC and may be, gain root privileges (sudo? or su with root's password? (see in this file list of potential security holes (SUID)))
+ /etc/grub.d/40_custom
+  # here you put your grub.cfg menu entries, password/users config, what else?
+  # (run "info grub" to learn about loopback devices and "search" command. With this it's possible to boot debian/lmde/mint from
+  # .iso file or partition (mint/lmde5 can be booted from .iso file and installed (and you can install vlock and screen onto live system during installation)).
+  # You can find grub menuentries templates for lmde5/mint/debian inside their .iso files (for mint/lmde5, look into /boot/grub/grub.cfg inside .iso FS))
+ 
+ /etc/default/grub.d/70_etc_default_grub.cfg
+  ## here you put copy of
+  ## /etc/default/grub
+  ## for the case that you install grub-efi-amd64, grub-efi-amd64-bin
+  ## (and grub-pc gets removed and file /etc/default/grub can get removed) 
+  ### ALSO, put these into this file:
+  ##  GRUB_CMDLINE_LINUX_DEFAULT="quiet splash consoleblank=30"
+  ##  GRUB_TERMINAL=console
+  ##  GRUB_ENABLE_CRYPTODISK=y
+  ##  GRUB_DISABLE_LINUX_UUID=true
+ 
+ /etc/apt/sources.list
+ /etc/apt/sources.list.d/
+ /etc/services
+  # 22 = ssh, 80 = http, ...
+ /etc/protocols
+  # tcp = 6, udp = 17, icmp = 1, ipip = 94, l2tp = 115
+ 
+ /etc/pam.d/su
+  ###  here you uncomment this line to disable su root access with password
+  ###  for uses not being members of wheel group:
+  ##    auth       required   pam_wheel.so
+ 
+ ## how to find potential secrity holes (SUID):
+ find / -perm 4000 -ls
+ ## how to find potential secrity holes (SGID):
+ find / -perm 2000 -ls
+ ## potential security holes (SUID):
+ /bin/su
+ /usr/bin/pkexec
+ /usr/libexec/polkit-agent-helper-1
+ /usr/bin/sudo
+ /usr/lib/virtualbox/...
+ ...
+ 
+ 
+ # drive
+ /dev/sda
+ # partition
+ /dev/sda1
+ # partition
+ /dev/sda2
+ ...
+ # drive
+ /dev/sdb
+ # partition
+ /dev/sdb1
+ ...
+ # drive
+ /dev/nmve0n1
+ # partition
+ /dev/nmve0n1p1
+ # partition
+ /dev/nmve0n1p2
+ ...
+ # drive
+ /dev/nmve0n2
+ # partition
+ /dev/nmve0n2p1
+ ...
+ # drive (virtual inside qemu/vbox?)
+ /dev/vda
+ # partition (virtual? virtio?)
+ /dev/vda1
+ ...
+ # drive
+ /dev/hda
+ # partition
+ /dev/hda1
+ ...
+ 
+
+gucharmap 2022
+ # open gucharmap and show "bullet" (U+2022) (•) character (means search next for "2022"?)
+gucharmap U+2023
+ # open gucharmap and show "TRIANGULAR BULLET" (‣)
+
+## env vars
+ ? (write "echo $?")  - to see last command exit code
+ ! (write "echo $!")  - to see PID of process launched with & like this (asynchronously, without waiting for process to terminate):
+  synaptic &
+   # don't do it, you can do this instead:
+     screen -S synaptic synaptic
+      # (when GNU screen is installed)
+ PATH
+ CPPFLAGS
+ CFLAGS
+ CXXFLAGS
+ LDFLAGS
+ LD_LIBRARY_PATH
+ PKG_CONFIG_PATH
+ 
+ HOME
+ 
+ set these as root to be able to launch gedit as root:
+ DISPLAY=:0.0
+ XAUTHORITY=/home/myname/.Xauthority
+ DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus
+ 
+ LANG
+ LANGUAGE
+ LC_ALL
+  # if LC_ALL is set, some other VARs are ignored
+ LC_ADDRESS
+ LC_MONETARY
+ LC_PAPER
+ LC_IDENTIFICATION
+ LC_NAME
+ LC_TELEPHONE
+ LC_MEASUREMENT
+ LC_NUMERIC
+ LC_TIME
+
+## permissions
+ basic permissions = 12 bits:
+  01. Set UID
+  02. Set GID
+  03. sticky bit
+  
+  04. Read    for user (owner)
+  05. Write   for user
+  06. eXecute for user (for folders, this bit allow to work with it's descendants)
+  
+  07. Read  for group
+  08. Write for group
+  09. eXecute for group (for folders, this bit allow to work with it's descendants)
+  
+  10. Read  for others
+  11. Write for others
+  12. eXecute for others (for folders, this bit allow to work with it's descendants)
+ each group of 3 bits is encoded as 1 octal digit with R = highest subdigit, w = middle (2nd) subdigit, x = lowest (3rd) subdigit:
+ (in 1st group use SUID/SGID/sticky instead of R/W/X)
+  octal_digit = 4*R+2*W+1*X (R,W,X are 0 or 1)
+  if r and x are set, w = clear (mode r-x), we get 4+0+1=5
+   --- -> 000 -> 0
+   --x -> 001 -> 1
+   -w- -> 010 -> 2
+   -wx -> 011 -> 3
+   r-- -> 100 -> 4
+   r-x -> 101 -> 5 ## note: r-x = 5
+   rw- -> 110 -> 6 ## number 6 binary encoded in big endian (bit order) becomes "110"
+   rwx -> 111 -> 7
+   (
+    for SUID/SGIT/Sticky
+   )
+   
+  1 octal digit = 3 bits. 12 bits = 4 octal digits
+  0700 = rwx------ (RWX for owner and nothing for group,others)
+  0070 = ---rwx--- (RWX for group)
+  0004 = ------r-- (R for others)
+  4711 = rwx--x--x and SUID (written rws--x--x)
+  4611 = rw---x--x and SUID (written rwS--x--x)
+  1611 = rw---x--x and sticky (written rw---x--t) # T and t for others mean "sticky and not x" and "sticky and x". Sticky is not for others, it's separate bit
+    # (sticky is written where you usually see bits for others)
+  1610 = rw---x--x and sticky (written rw---x--T)
+  2610 = rw---x--- and SGID (written rw---s---)
+  2600 = rw------- and SGID (written rw---S---) # S and s mean "Set and not x" and "Set and x"
+
+# key combinations
+ Ctrl+Alt+F1
+ ...
+ Ctrl+Alt+F6
+ Ctrl+Alt+F7
+ ...
+ Ctrl+Alt+F12
+ 
+ #Window management
+  Alt-F8
+  or
+  Alt-RMB
+  
+  Alt-F7
+  or
+  Alt-LMB
+  
+  Alt-F10
+  Alt-F9
+  Alt-Tab
+  Alt-F4
+  F11
+  
+  
+ Ctrl+Alt+T # terminal
+ 
+ Ctrl+C # copy
+ Ctrl+V # paste
+ Ctrl+X # cut
+ 
+ # in terminal
+  Ctrl+D = EOF or quit bash
+  Ctrl+Z = pause job (run "jobs" and "fg 1" or "fg 2" or ... (or "bg 1" ...) to unpause)
+  Ctrl+C = send SIGINT (interrupt, cancel execution)
+  Ctrl+L = clear, when in bash prompt
+  Ctrl+W = erase word
+  Ctrl+U = (?) erase whole line ?
+  Tab = complete command or argument or list completions
+  Arrows = browse command history or navigate inside current line 
+  Home/End = navigate in line
+  
+ Super_L
+ 
+ Alt_F2
+ 
+ Ctrl+Shift+U, code, space/enter (code can be "ab" for "«" or "20ac" for "€" or ..., run "gucharmap" and see codes)
+  # small code list:
+    "a" = newline (Enter)
+    "9" = Tab
+   "20" = Space
+   "30" = "0"
+       ...
+   "39" = "9"
+   "ab" = "«" (opening quotation mark)
+   "bb" = "»" (closing quotation mark)
+   "d7" = "×" (times)
+   "f7" = "÷" (divide)
+   "b0" = "°" (degree sign)
+   "a0" = " " = non-breaking space ( = &nbsp; = &#160; = &#xa0;)
+   "2014" = "—"
+   "2022" = "•" (bullet?)
+   "2026" = "…" (HORIZONTAL ELLIPSIS) (run "utf8lookup 2026" in bash/terminal/console)
+   "20ac" = "€"
+   "20bd" = "₽"
+   "20bf" = "₿"
+   "2102" = "ℂ"
+   "2103" = "℃"
+   "2109" = "℉"
+   "210d" = "ℍ"
+   "2115" = "ℕ"
+   "2116" = "№"
+   "2119" = "ℙ"
+   "211A" = "ℚ"
+   "211d" = "ℝ"
+   "2124" = "ℤ"
+   "213f" = "ℿ"
+   "2140" = "⅀"
+   "2142" = "⅂"
+   "2190" = "←"
+   "2191" = "↑"
+   "2192" = "→"
+   "2193" = "↓"
+   "219e" = "↞"
+   "21a0" = "↠"
+   "21ba" = "↺"
+   "21bb" = "↻"
+   "21d0" = "⇐"
+   "21d1" = "⇑"
+   "21d2" = "⇒"
+   "21d3" = "⇓"
+   "2200" = "∀"
+   "2202" = "∂"
+   "2203" = "∃"
+   "2204" = "∄"
+   "2205" = "∅"
+   "2208" = "∈"
+   "2209" = "∉"
+   "220a" = "∊"
+   "220b" = "∋"
+   "220c" = "∌"
+   "220d" = "∍"
+   "220f" = "∏"
+   "2211" = "∑"
+   _"300"_ = "_̀_"
+   _"301"_ = "_́_"
+   _"302"_ = "_̂_"
+   _"303"_ = "_̃_"
+   _"304"_ = "_̄_"
+   _"305"_ = "_̅_"
+   _"306"_ = "_̆_"
+   _"307"_ = "_̇_"
+   _"308"_ = "_̈_"
+   _"337"_ = "_̷_"
+   _"338"_ = "_̸_"
+   "1f525" = "🔥"
+   "1f98a" = "🦊"
+   "1f50d" = "🔍"
+   "1f50e" = "🔎"
+   
+   
+   
+   
+ Ctrl-Alt-SysRq-s   # sync
+ Ctrl-Alt-SysRq-u   # umount/remount_ro
+ Ctrl-Alt-SysRq-b   # reboot
+ Ctrl-Alt-SysRq-o   # poweroff
+  # "vlock -as" seems to disable previous combinations (with SysRq)
+
+## specify bash script on cmdline:
+ bash -c "cmd1 ; cmd2 | cmd3 | cmd 4 ; cmd 5 && cmd6 || cmd 7 ; cmd8 & cmd9 2>&1| less -i "
+## bash HEREDOCs:
+ cat > 1.txt << EOF
+1 $BASHPID
+2
+3
+EOF
+ # $ (and \ (backslash)?) HAVING SPECIAL MEANING
+
+ cat > 1.txt << "EOF"
+$1
+$2
+$3
+EOF
+ # $ not having special meaning
+
+# bash vars
+ ### put "$" and VARNAME like this:
+ ##   echo $BASHPID is BASHPID
+# bash: change back to previous working directory:
+ cd -
+## Most basic bash commands:
+ ## for manual page on a command "cmd123", run "man cmd123" or "help cmd123" or "info cmd123"
+ ## if you don't get right man page, run "man -k cmd123", see in which man section is your man page located and add section number
+ ## (run something like this: "man 1 cmd123")
+ list: alias bash cat cd cp exit find grep help info less ls man mkdir more mv popd pushd pwd rm rmdir touch type unalias which
+ apropos
+ list: apt apt-get apt-cache apt-file aptitude synaptic apt-mark
+ list: 7z zip tar gzip xz bzip2
+ list: zstd lzip 
+ list: file lsblk blkid
+ list: gdisk fdisk
+ list: cgdisk cfdisk
+ list: sgdisk sfdisk
+ fdisk -l
+ parted gparted gnome-disks
+ alsamixer
+## additional set of commands
+ list: badblocks base16 base64 hex unhex hd hexdump awk sed cut tee
+## next
+ pee
+ list:  groups users w who uptime "last -x shutdown" adduser deluser useradd groupadd groupmod usermod gpasswd chown chgrp chmod chattr lsattr getfacl setfacl newgrp "ls -lai"
+ list: quota setquota quotacheck
+ ## compute stats for quota on FS mounted with usrquota,grpquota
+ quotacheck -u -g -m /mnt/nvme0n1p1
+ ## setup limits for user (see man page)
+ setquota --user myname 20G 21G 300000 400000 /mnt/myfs
+ ## display quota statistics and limits for user
+ quota -v -s --user myname
+## next
+ mount umount lsof chroot 
+## next
+ arch 
+## multimedia
+ audacity
+## extra commands
+ pivot_root smartctl blockdev
+## man pages
+ man ext4
+ man hier
+ man file-hierarchy
+
+ man ppm
+ man pgm
+ man pbm
+ man pnm
+ apropos regex | less -i
+ man 7 regex
+ man -k pcresyntax
+ man 3 pcresyntax
+ man ascii # wrong?
+ man -k ascii
+ man -k ascii | grep -E ^ascii
+ man 7 ascii
+ man 7 charsets
+ man 7 utf-8
+ man 7 utf8
+ man 7 unicode
+ man cp | less -i
+ # apropos ... = man -k ...
+ # it searches man pages related to ...
+ man -k apropos
+ apropos apropos
+ man info
+ man -k regex
+ man 7 regex
+ # same:
+ man regex\(7\)
+## variable specification for one command (bash):
+ VAR1=VAL1 VAR2=VAL2 ... VAR_N=VAL_N cmd arg1 arg2 ...
+## bash scripting
+ list: return exit source . : true false if test [ case for while until break continue local export set exec eval let function shift req
+ list: basename dirname
+ $(...)
+ $((...))
+ for i in {1..10}  ; do ... ; done
+ for i in {01..10} ; do ... ; done
+ for i in {1..010} ; do ... ; done
+ for i in $(seq 1 10) ; do ... ; done
+ for i in ~/{1,2}.txt ; do ... ; done
+  # same:
+  for i in ~/1.txt ~/2.txt ; do ... ; done
+ ls ~/screenshot.p[pgbn]m
+  # finds ~/screenshot.ppm and ~/screenshot.pgm and ~/screenshot.pbm and ~/screenshot.pnm
+  # if they exist
+  # (if not found, pattern is passed as argument to command) (is it a glob or a wildcard? not a regexp)
+ for ((i=0;i<100;++i)) ; do ... ; done
+ for ((i=0;i<$(nproc);++i)) ; do ... ; done
+ if [ "$1" = "string" ] ; then
+  ...
+ else
+  ...
+ fi
+ for i in *.txt  ; do
+  case $i in
+   *wrong*.txt | *bad*.txt )
+    rm -fv $i
+    ;;
+   *)
+    echo skipping $i
+    ;;
+  esac
+ done
+ ## $0 is script name or what? (argv[0])
+ ## $1 is 1st arg (argv[1])
+ ## $2 is argv[2]
+ ## ...
+ ## "$*" is one string with all args
+ ## "$@" is few strings, 1 argument per string
+ ## $# is number of args
+ ## "shift" moves $2 to $1, $3 to $2, ... ($# decreases. $0 unchanged. Previous value of $1 not saved)
+ ### (when running a bash function (declared with "function") or a script with "source" or ".", $1 $2 $3 ... are arguments
+ ### passed to function call or "source". Right? Like this:
+ ##   function qwecho() { echo $1 ;}
+ ##   qwecho asd
+ ##   source ~/script.bash 1 2 three four
+ ##   function qwecho_more() { echo "$@" ; }
+ ##   qwecho_more 1 2 3 4 5
+ ##   function qwecho_as_one_argument() { echo "$*" ; }
+ ##   qwecho_as_one_argument 1 2 3 4 5
+ ##   function count_args() { echo "$#" ; }
+ ##   count_args "1  1   1"     " 22  2"    three    "  four   _  four  "
+ ### )
+ ### "#" when it's the 1st character of a word (NOT ALWAYS), starts a comment (all characters for this to the end of the line are ignored)
+ ### not comment: 
+ ##   $ echo 12#4
+ ### comment:
+ ##   $ echo 12 #4
+ cmd arg1 ... > 1.txt
+  # overwrite file 1.txt with stdout (FD 1) of running command
+ cmd arg1 ... >> 1.txt
+  # append to file 1.txt contents written to stdout (FD 1) of running command
+ cmd arg1 ... 2> 1.txt
+  # overwrite file 1.txt with stderr (FD 2) of running command
+ cmd arg1 ... 2>> 1.txt
+  # append to file 1.txt contents written to stderr (FD 2) of running command
+ cmd arg1 ... < 1.txt
+  # command's  reads from stdin (FD 0) will read from file 1.txt
+ cmd arg1 ... 2>&1| less -i
+  # pass stdout (FD 1) and stderr (FD 2) to "less -i"'s stdin (FD 0)
+ cmd1 arg1 ... | cmd2 arg1 ... | ...
+  # cmd1 stdout --> cmd2 stdin. cmd2 stdout --> cmd3 stdin. ...
+ # launch process in background and show it's PID (process ID):
+  cmd arg1 ... &
+  echo "PID is" $!
+ # run command and show it's exit code
+  cmd arg1 ...
+  echo exit code is $?
+   # exit code 0 = success. not 0 = failure
+   # exit code is basically what you return from "int main(...)" function in c++ program
+   # or you say "exit 12" in bash script and exit code is 12
+   # or you say "return 13" in bash function or "source"-called ("."-invoked) bash script
+   # and exit code of function call or "source" (".") command is 13
+  
+ 
+ socket # extra program
+## more commands
+ bind
+# desktop environments
+ Xfce Cinnamon Mate LXQT LXDE Gnome KDE Enlightenment 
+# display managers:
+ lightdm gdm xdm lxdm sddm
+# what is ROFI? ("rofi" is application launcher or DE or what?)
+## more bash (terminal) commands
+ list: bc blkdiscard blkid brasero blockdev c++ c44 cal calc calligra... catfish cc cd chardetect charmap chkconfig cjb2 clear cmp "compgen -c" column convert cp cpufreq-info cpufreq-set cpuid cryptsetup curl cut cvlc cvt date dc dd ddrescue declare depmod df diff dig dirname djview4 djvm dmesg dmidecode dm-tool dpkg dpkg-deb dpkg-reconfigure du e2label echo eject egrep env ethtool eval exec factor fallocate false fastboot fg bg file filezilla find findmnt finger firefox flac free fstrim function gajim galculator gawk gcc gdb gdebi geany gedit geeqie gftp gftp-gtk gftp-text gimp glxgears  glxinfo gnome-disks gnumeric gparted gpasswd gpg grep  groupadd groupdel groupmems groupmod groups grub-install grub-mkconfig grub-mkpasswd-pbkdf2 gtf gtk-chtheme gucharmap gunzip guvcview gzip halt handbrake HandBrakeCLI handbrake-gtk hd hdparm head help hex hexdump host hostname hp-plugin htop hwclock hwinfo hw-probe iconv id ifconfig img2pdf img2pdf-gui imvirt indent info init inkscape inxi ionice iotop ip iptables isohybrid  iwconfig iwlist  jdupes jftp jobs journalctl k3b karbon kate kazam kdenlive kdiff3 keyctl keyring kill killall kpartx krita krusader kvm kwrite l laptop-detect last ld ldd less let lftp libreoffice links links2 ln local locate login logout losetup lp lpadmin lpq lpr ls lsattr lsblk lsb_release lscpu lsdev lshw lsmod lsof lspci lspcmcia lsusb lvm2 lynx lzip lzma make man mawk mc mcedit mcview mdadm menulibre mesg meson mimetype minicom mintinstall mintlocale mint-release-upgrade mintreport mint-switch-to-local-mirror mintupdate-cli mkdir mkfifo mkfs.ext4 mkisofs mknod mkpasswd mktemp modprobe mogrify mokutil monit more morla mount mousepad mpv mtr mugshot mv mysql mysqldump nano nasm nawk nc ncat ndisasm neofetch netcat nethogs netstat netwatch newgrp nice ninja nmap nm-applet nmapsi4 nmcli nm-connection-editor nmtui nmtui-edit nohup nproc nslookup ntfslabel objcopy objdump obs onboard openssl openvpn parted partprobe passwd pastebin patch pavucontrol pcmanfm pdfarranger pdfchain pdfgrep pdfimages pee peek php pico picocom pidgin pidof pidwait ping pix pixz pkaction pkexec pkill pluma plymouth plymouth-set-default-theme popd poweroff powertop printenv printf ps ps2pdf pstree pushd pv pwck pwgen pwget python python3 qbittorrent qemu-img qemu-io qemu-system-x86_64 quota quotacheck rasterizer read readlink realpath reboot recordmydesktop remmina rename renice reset resize rev rfkill rgrep rm rmdir rmmod route routef routel rpm rsync rtorrent scanimage scp scrcpy screen screendump sed select sensors seq service set set-default-locale setfacl setquota setterm setxkbmap sfdisk sftp sgdisk sh shar shed shell-quote shift shotcut showchar showconsolefont showkey showrgb shred shutdown simple-scan simplescreenrecorder size skrooge sleep smartctl smbclient smbpasswd smtube socket socklist sort source split ss ssh ssh-add ssh-copy-id sshfs ssh-keygen startx startxfce4 stat strace strings strip stty su sudo sudoedit swaplabel swapoff swapon synaptic sync syslinux systemctl systemd-id128 systemd-mount tabs tac tail tar tasksel taskset tc tcpdump tcptraceroute tee telnet tesseract test testdisk thunar Thunar thunar-settings thunar-volman thunar-volman-settings time time-admin timedatectl timeshift timeshift-launcher timidity tmux toe top touch tput tr tracepath traceproto traceroute transmission-gtk transset tree true truncate trust tset tty tune2fs type uconv udevadm uget ulimit umask umlet umount unalias uname unexpand expand  uniq unix2dos unlink unlzma unsquashfs unzip updatedb update-grub update-initramfs update-rc.d uptime useradd userdel usermod users /usr/libexec/polkit-agent-helper-1 /usr/lib/xorg/Xorg.wrap utf8lookup uudecode uuencode valgrind VBoxBalloonCtrl VBoxHeadless VBoxManage VirtualBox vi vim vimtutor visudo vlc vlock vmstat vokoscreen vokoscreenNG w wall watch wc wcalc wdiff wget wget2 whatis what-provides whereis which who whoami whois wipefs wireshark write netwrite netread x11vnc xaos xargs xauth xcalc xclipboard xclock xed xev xeyes xfburn xfce4-about xfce4-appearance-settings xfce4-appfinder xfce4-dict xfce4-display-settings xfce4-keyboard-settings xfce4-mime-helper xfce4-mime-settings xfce4-mouse-settings xfce4-popup-directorymenu xfce4-popup-whiskermenu xfce4-power-manager-settings xfce4-sensors xfce4-session xfce4-settings-manager xfce4-taskmanager xfce4-terminal xfdesktop xfdesktop-start xflock4 xfwm4 xfwm4-settings xfwm4-tweaks-settings xfwm4-workspace-settings xhost xinit xkill xorrisofs xpdf Xvfb xvfb-run xvidtune x-window-manager xwininfo x-www-browser xz xzoom yes youtube-dl yt-dlp zdump zip znew zstd
+ list: complete di 
+## >1043 commands without arguments:
+. : [ pivot_root 2html 2xml 7z a2dissite a2enmod a2ensite abiword abw2epub ac adb addgroup adduser alias alsamixer animate any2djvu apachetop apropos apt apt-add-repository apt-cache apt-file apt-get aptitude apt-mark apturl apturl-gtk aqemu ar arc arch archivemount arp arpwatch as ascii ascii2uni asciiview at audacity autoconf autokey autokey-gtk autokey-qt autom4te automake autoscan avibox aview awk axel badblocks barcode base16 base32 base64 base64mime basename basenc basez bash bashbug bc bg binary2ascii bind bitmap bless blkdiscard blkid blockdev bluefish bmore bootctl bpytop brasero btop btrfstune bunzip2 busctl busybox bzip2 c++ c44 caja cal calc calligra calligrasheets calligrawords cat catfish catman cc cd cdrdao cdrecord celluloid certtool cfdisk cfsidk cgdisk chage chardetect charmap chat chattr chcon chcpu chfn chgpasswd chgrp chkconfig chmem chmod chown chpasswd chronic chroot chrt chsh chvt cjb2 clear clonezilla cmp codepage collectl column comm command command-not-found compare compgen complete compress conntrack convert corelist cp cpgr cpio cpp cppw cpufreq-info cpufreq-set cpuid createlang createuser cryptsetup ctorrent curl cut cvlc cvt daemonize dash date dc dd ddrescue ddrescueview ddrutility ddstdecode deallocvt declare declone deluge depmod desktop-file-validate devdump df di dialog diff diff3 difference diffpp dig dir dircolors dirname disown display djview djview4 djvm djvmcvt djvubind djvuextract djvumake djvutoxml dmesg dmidecode dm-tool dnsdomainname dnstop domainname dpkg dpkg-awk dpkg-checkbuilddeps dpkg-deb dpkg-reconfigure dpkg-source dpkg-split dselect dstat du duff dumppdf dupemap duperemove dvipdf e2label ebook-edit echo ecryptfs-find ecryptfs-insert-wrapped-passphrase-into-keyring ecryptfs-wrap-passphrase editor editres efibootmgr egrep eject elinks emacs enscript env eog ethtool eval exec expand factor fakeroot-sysv fallocate false fastboot fbi fdisk fg fgrep file filezilla find findimagedupes findmnt findrule finger firefox flac flake flock flowblade free fsarchiver fsstat fstrim ftptop function fuser fwupdate fwupdtool g++ gajim galculator gamma4scanimage gawk gcc gdb gdebi gdialog gdisk geany gedit geeqie getconf geteltorito getfacl getopt gettext gftp gftp-gtk gftp-text ghostwriter gimp glances glxgears glxheads glxinfo gman gmtp gnome-disks gnome-terminal gnome-text-editor gnomint gnomint-cli gnucash gnucash-cli gnumeric gnutls-cli gnutls-serv gparted gpasswd gpg grck grep gresource groupadd groupdel groupmems groupmod groups growisofs grub-install grub-mkconfig grub-mkpasswd-pbkdf2 grub-mkrescue grub-mkstandalone grub-mount gs gtf gtk-chtheme gucharmap gunzip guvcview gvim gvimdiff gvimtutor gvncviewer gzip halt handbrake HandBrakeCLI handbrake-gtk hd hdparm head help hex hexdump host hostname hp-check hp-clean hp-firmware hp-info hp-logcapture hp-plugin hp-scan hp-testpage html2text htop hwclock hwinfo hw-probe icinga2 icontopbm iconv icotool id identify ifconfig ifdata iftop img2pdf img2pdf-gui imvirt indent info init inkscape insmod install instant inxi ionice iostat iotop ip ipptool iptables isohybrid isoinfo isovfy iwconfig iwlist java jdb jdupes jftp jobs joe join journalctl jq jshon k3b kamera karbon kate kazam kbxutil kdenlive kdiff3 keyctl keyring kill killall koi8rxterm kpartx krita krusader kvm kwrite l laptop-detect last lastb lastcomm ld ldconfig ldd ledit less let lftp libreoffice libtoolize links links2 lins linuxvnc ll ln lnstat local locate login loginctl logout look losetup lp lpadmin lpq lpr ls lsattr lsblk lsb_release lscpu lsdev lsdiff lshal? lshw lslocks lslogins lsmem lsmod lsof lspci lspcmcia lsusb ltrace lvm2 lxc-console lxc-create lxc-execute lxc-info lxc-ls lxc-monitor lxc-start lxc-stop lxc-wait lynx lzip lzma make makeinfo man mandb marco mate-autogen mate-terminal mawk mc mcedit mcopy mcview mdadm mdsearch mediainfo melt mencoder menulibre merge_unicharsets mesg meson metacity mimetype minicom minidjvu minitube mintBackup mintinstall mintlocale mint-release-upgrade mintreport mint-switch-to-local-mirror mintupdate-cli mkbitmap mkdep mkdir mkdiskimage mkfifo mkfs.ext4 mkfs.xfs mkisofs mkmanifest mk_modmap mknod mkpasswd mktemp mkvextract mkvinfo mkvmerge mkvpropedit mkvtoolnix-gui modprobe mogrify mokutil monit monitorix more morla mount mousepad mousetweaks mpv msgfilter mtr mugshot mv mysql mysqldump mytop nagios4 nano nasm nawk nc ncat ndisasm neofetch net netcat nethogs netstat netwatch netwox newgrp nice ninja nisdomainname nl nm nmap nm-applet nmapsi4 nmblookup nmcli nm-connection-editor nmon nm-online nmtui nmtui-edit nohup nproc nsenter nslookup ntfsinfo ntfslabel ntfsrecover ntopng objcopy objdump obs ocrmypdf odp2txt odt2doc odt2html odt2txt odt2xhtml odt2xml onboard openshot-qt openssl openvpn openvt orca p11-kit p11tool pactl pandoc parallel parted partimage partprobe partx passwd paste pastebin patch pavucontrol pcmanfm pcre2-config pcre2grep pdf2ps pdf2svg pdfarranger pdfbook2 pdfchain pdfdetach pdfgrep pdfimages pdfinfo pdflatex pdfposter pdfsam pdfsig pdftk pdftoppm pdftotext pdiff pee peek perf perl phototonic php pico picocom pidgin pidof pidstat pidwait ping pix pixz pkaction pkexec pkill play pluma plymouth plymouth-set-default-theme pmap pnmmontage pnmnorm popd poweroff powertop ppmchange ppmtoxpm print printenv printer-profile printf ps ps2pdf psktool pslatex pstoedit pstree pushd pv pwck pwgen pwget python python3 qbittorrent qemu-img qemu-io qemu-storage-daemon qemu-system-x86_64 quota quotacheck rasterizer read readlink realpath reboot rec recordmydesktop red remmina rename renice reset resize rev rfkill rgrep rgvim rm rmdir rmmod route routef routel rpm rst2odt rsync rtorrent rview rvim sa sar sarg savelog scanimage scp scrcpy screen screendump script seahorse sed select sensors seq service set set-default-locale setfacl setkeycodes setlogcons setpci setpdfmetadata setquota setterm setxkbmap sfdisk sftp sgdisk sh shar shed shell-quote shift shotcut showchar showconsolefont showkey showrgb shred shuf shutdown simple-scan simplescreenrecorder size skrooge sleep smartctl smbcacls smbclient smbcquotas smbinfo smbpasswd smtube socket socklist sort source sox split ss ssh ssh-add ssh-copy-id sshfs ssh-keygen ssvnc startx startxfce4 stat strace strawberry strings strip stty su sudo sudoedit sum svlc swaplabel swapoff swapon sxw2odt synaptic sync syslinux systemctl systemd-id128 systemd-mount tabs tac tail talk tar tasksel taskset tc tcpdump tcptraceroute tee telnet tesseract test testdisk tex4ht thunar Thunar thunar-settings thunar-volman thunar-volman-settings time time-admin timedatectl timeshift timeshift-launcher timidity tmux toe top touch tput tr tracepath traceproto traceroute transmission-gtk transset tree true truncate trust tset tty tune2fs type uconv udevadm uget ulimit umask umlet umount unalias uname unarj unexpand unhex uniq unix2dos unlink unlzma unpack200 unshare unsquashfs unzip updatedb update-grub update-initramfs update-rc.d upload-system-info uprightdiff uptime usbreset useradd userdel usermod users /usr/libexec/polkit-agent-helper-1 /usr/lib/xorg/Xorg.wrap usvg utf8lookup uudecode uuencode uuenview uuidparse valgrind vboxautostart vboxballoonctrl VBoxBalloonCtrl VBoxHeadless vboxmanage VboxManage VBoxManage VirtualBox vi vidir viewres vigr vim vimdiff vimtutor vipw virtualbox virtualboxvm visudo vlc vlock vmstat vnstat vokoscreen vokoscreenNG w wall watch wc wcalc wdiff wget wget2 whatis what-provides whereis which who whoami whois winff winff-gtk2 winff-qt wipefs wireshark wm-detect wordview write x11perf x11vnc xaos xargs xauth xcalc xclipboard xclock xdg-icon-resource xdriinfo xed xedit xev xeyes xfburn xfce4-about xfce4-appearance-settings xfce4-appfinder xfce4-dict xfce4-display-settings xfce4-keyboard-settings xfce4-mime-helper xfce4-mime-settings xfce4-mouse-settings xfce4-popup-directorymenu xfce4-popup-whiskermenu xfce4-power-manager-settings xfce4-sensors xfce4-session xfce4-settings-manager xfce4-taskmanager xfce4-terminal xfdesktop xfdesktop-start xflock4 xfwm4 xfwm4-settings xfwm4-tweaks-settings xfwm4-workspace-settings xfwrite xgamma xhost xhtml2ps ximtoppm xinit xkbbell xkbcomp xkbevd xkbprint xkbset-gui xkbwatch xkill xlinks2 xload xls2ods xmag xman xml2 xmlcopyeditor xmldiff xmlpatch xmlto xmore xorrisofs xournalpp xpdf xqxdecode xrandr xrdb xsane xscanimage xscreensaver xscreensaver-demo xscreensaver-getimage-video xscreensaver-text xset xsetbg xsetpointer xsetroot xterm xtigervncviewer Xvfb xvfb-run xvidtune x-window-manager xwininfo x-www-browser xz xzoom yes youtube-dl ypdomainname yt-dlp yuvtoppm zdump zip znew zstd 
+# also (type beginning and press Tab Tab in bash): ch... apt-... hp-... ecryptfs... dpkg-... idevice...  
+# pkaction (NOTE !)
+# transset       !  busctl 
+# apt-cache search hex edit
+
+## openssh-server "secure" setup for sftp only usage (part of /etc/ssh/sshd_config file):
+  HostKey /etc/ssh/host_id_ed25519
+  Port 22
+  PermitRootLogin  no
+  PasswordAuthentication  no
+  ChallengeResponseAuthentication no
+  Subsystem  sftp  internal-sftp
+  
+  ## TODO: explain this line:
+  # TCPKeepAlive yes
+  
+  # connecting user must be both one of my_limited_ssh_user1/my_limited_ssh_user2
+  # and member of group sftp_only
+   AllowUsers my_limited_ssh_user1 my_limited_ssh_user2
+   AllowGroups sftp_only
+  
+  # password authentication enabled. if not suitable, change to pubkey or what? (host-based?)
+  # (see man sshd_config and it's section on "Match" (it lists possible commands in Match area))
+  Match Group sftp_only
+   AllowAgentForwarding no
+   AllowStreamLocalForwarding no
+   AllowTcpForwarding no
+   AuthenticationMethods password
+   ChrootDirectory /jail/sftp
+   ForceCommand internal-sftp
+   PasswordAuthentication yes
+   PermitEmptyPasswords no
+   PermitListen none
+   PermitOpen none
+   PermitTTY no
+   PermitTunnel no
+   PermitUserRC no
+  #PubkeyAcceptedKeyTypes
+  #PubkeyAuthentication
+   X11Forwarding no
+
+# GrUB command line mode commands:
+ halt
+ reboot
+ echo "123"
+ linux ...
+ initrd ...
+ set root="hd1,4"
+ chainloader +1
+ boot
+ search --no-floppy --set root --fs-uuid 12345678-1234-1234-1234-123456789abc
+ loopback myloop (${root})/my.iso
+# GrUB rescue commands
+ ls
+ set root="hd0,3"
+ set prefix="(hd0,3)/boot/grub"
+ insmod normal
+ normal
+# smth like this for grub (TODO: check and explain)
+ set gfxpayload=1280x1024x24,1280x1024
+ ### Mistake here?
+ ### this way one can set video mode like 1280x1024
+# GrUB/LiLo Kernel cmdline
+ consoleblank=30
+  # means poweroff display/monitor after 30 seconds of idle time
+ "ro" or "rw"
+  # how / filesystem is mounted at some early stage (or what?)
+  # (ro = read only, rw = read-write)
+ vga=789 # 800x600x24
+ vga=792 # 1024x768x24
+ ...
+  # video mode codes
+ init=/bin/bash
+  ### means launch /bin/bash instead of systemd/sysvinit/... as init
+  ### this way, you can change root (or other user's) password if forgot it.
+  ### To change password run this:
+  ##   mount -o remount,rw /
+  ##   passwd
+  ##   sync
+  ##   sync
+  ### Then press Ctrl-Alt-Del and boot into normal mode or recovery (see "advanced" submenu in GrUB)
+  ### (need to have root password for recovery mode)
+  ### Also, disable public execute access to /bin/su (su allows to become root if you know password of root)
+  ### Also, disable public execute permission on pkexec and polkit-agent-helper-1 files (see list of dangers (SUID) here)
+  ### Note: with this setup it can be impossible for some users to access USB flash or mount something else
+
+# CPU Flags (in /proc/cpuinfo):
+ vmx   if VT-x is supported (Intel)
+ svm   if AMD-V is supported (AMD)
+ # how to check (bash cmdline):
+  $ grep -E "vmx|svm" /proc/cpuinfo
+  $ echo $?
+  ## if 0, then strings found (check output of grep to see if founds are CPU flags)
+  ## (or open /proc/cpuinfo with "less", type "/vmx|svm" Enter (this is Regular Expression search))
+
+### END
+
